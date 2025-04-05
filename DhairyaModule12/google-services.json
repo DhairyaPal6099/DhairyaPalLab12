@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "330473880816",
+    "firebase_url": "https://dhairyalab10-default-rtdb.firebaseio.com",
+    "project_id": "dhairyalab10",
+    "storage_bucket": "dhairyalab10.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330473880816:android:6c338ea40985c527275635",
+        "android_client_info": {
+          "package_name": "dhairya.pal.n01576099.dp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAqQtMwdg2BfaZexrQhP9rmAn1BZ1Nnco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330473880816:android:36578658f23d2260275635",
+        "android_client_info": {
+          "package_name": "dhairya.pal.n01576099.lab12"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAqQtMwdg2BfaZexrQhP9rmAn1BZ1Nnco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

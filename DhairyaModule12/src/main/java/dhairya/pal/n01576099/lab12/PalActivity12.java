@@ -27,6 +27,8 @@ public class PalActivity12 extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.dhaToolbar);
         setSupportActionBar(toolbar);
+
+
     }
 
     @Override

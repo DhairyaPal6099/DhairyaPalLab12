@@ -2,4 +2,10 @@
     <string name="app_name">DhairyaLab122</string>
     <string name="all_characters_but_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&amp;'()*+,-./:;?@[\]^_`{|}~</string>
     <string name="full_name_studentid">Dhairya Pal N01576099</string>
+    <string name="empty_not_allowed">Empty not allowed</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="empty_string" />
+    <string name="no_data_to_delete">No data to delete</string>
+    <string name="regex_for_coursename">^[A-Z]{4}-\\d{3,4}$</string>
+    <string name="coursesindatabase">coursesInDatabase</string>
 </resources>
