@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dh11airya">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/full_name_studentid"
+        android:textColor="@color/red"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginTop="150dp"
+        android:textStyle="italic|bold" />
+
+    <EditText
+        android:id="@+id/dhaCourseNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="215dp"
+        android:hint="Enter course name" />
+
+    <EditText
+        android:id="@+id/dhaCourseDescriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:digits="@string/all_characters_but_digits"
+        android:hint="Enter course description" />
+
+    <Button
+        android:id="@+id/dhaAddButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="60dp"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/dhaDeleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="260dp"
+        android:text="Delete" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dhaRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="375dp" />
+
+</FrameLayout>
