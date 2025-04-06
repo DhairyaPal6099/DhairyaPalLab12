@@ -8,4 +8,7 @@
     <string name="no_data_to_delete">No data to delete</string>
     <string name="regex_for_coursename">^[A-Z]{4}-\\d{3,4}$</string>
     <string name="coursesindatabase">coursesInDatabase</string>
+    <string name="delete_this_record">Delete this record?</string>
+    <string name="delete">DELETE</string>
+    <string name="regex">^[A-Z]{4}-\\d{3,4}$</string>
 </resources>

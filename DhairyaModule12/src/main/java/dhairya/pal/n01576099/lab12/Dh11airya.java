@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class Dh11airya extends Fragment {
     private CourseAdapter adapter;
     private ArrayList<CourseItemModel> courseItemRVArrayList;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("coursesInDatabase");
+    DatabaseReference myRef;
 
     public Dh11airya() {
         // Required empty public constructor
@@ -45,6 +46,14 @@ public class Dh11airya extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.fragment_dh11airya, container, false);
+
+        myRef = database.getReference(getString(R.string.coursesindatabase));
+        courseRV = view.findViewById(R.id.dhaRecyclerView);
+        EditText courseNameEditText = view.findViewById(R.id.dhaCourseNameEditText);
+        EditText courseDescriptionEditText = view.findViewById(R.id.dhaCourseDescriptionEditText);
+        Button addButton = view.findViewById(R.id.dhaAddButton);
+        Button deleteButton = view.findViewById(R.id.dhaDeleteButton);
+        courseItemRVArrayList = new ArrayList<>();
 
         //Setting the unique record id to the maximum course id + 1
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -65,13 +74,6 @@ public class Dh11airya extends Fragment {
 
             }
         });
-
-        courseRV = view.findViewById(R.id.dhaRecyclerView);
-        EditText courseNameEditText = view.findViewById(R.id.dhaCourseNameEditText);
-        EditText courseDescriptionEditText = view.findViewById(R.id.dhaCourseDescriptionEditText);
-        Button addButton = view.findViewById(R.id.dhaAddButton);
-        Button deleteButton = view.findViewById(R.id.dhaDeleteButton);
-        courseItemRVArrayList = new ArrayList<>();
 
 
         myRef.addChildEventListener(new ChildEventListener() {
@@ -150,7 +152,7 @@ public class Dh11airya extends Fragment {
         });
 
         addButton.setOnClickListener(vieww -> {
-            Pattern pattern = Pattern.compile("^[A-Z]{4}-\\d{3,4}$");
+            Pattern pattern = Pattern.compile(getString(R.string.regex));
             if (courseNameEditText.getText().toString().isEmpty()) {
                 courseNameEditText.setError(getString(R.string.empty_not_allowed));
             }
@@ -182,10 +184,17 @@ public class Dh11airya extends Fragment {
     }
 
     private void buildRecyclerView() {
+        //The third argument is a method I made up in CourseAdapter
         adapter = new CourseAdapter(courseItemRVArrayList, getContext(), new CourseAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(CourseItemModel courseItem, int position) {
-                //TODO: Show alert dialog box to update or delete the item
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setPositiveButton(R.string.delete, (dialogInterface, i) -> {
+                    myRef.child(String.valueOf(courseItem.getCourseId())).removeValue();
+                    dialogInterface.dismiss();
+                });
+                builder.setTitle(R.string.delete_this_record);
+                builder.create().show();
             }
         });
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
