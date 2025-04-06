@@ -1,7 +1,11 @@
+// Dhairya Pal N01576099
+
 package dhairya.pal.n01576099.lab12;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,46 +19,94 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Dh11airya extends Fragment {
-
+    private int numberOfCourseRecords = 0;
     private RecyclerView courseRV;
     private CourseAdapter adapter;
     private ArrayList<CourseItemModel> courseItemRVArrayList;
-    FirebaseDatabase database;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("coursesInDatabase");
 
     public Dh11airya() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dh11airya, container, false);
+        View view = getLayoutInflater().inflate(R.layout.fragment_dh11airya, container, false);
 
-        database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(getString(R.string.coursesindatabase));
-        courseItemRVArrayList = new ArrayList<>();
         courseRV = view.findViewById(R.id.dhaRecyclerView);
         EditText courseNameEditText = view.findViewById(R.id.dhaCourseNameEditText);
         EditText courseDescriptionEditText = view.findViewById(R.id.dhaCourseDescriptionEditText);
         Button addButton = view.findViewById(R.id.dhaAddButton);
         Button deleteButton = view.findViewById(R.id.dhaDeleteButton);
+        courseItemRVArrayList = new ArrayList<>();
 
-        //courseItemRVArrayList = new ArrayList<>();
 
-        //loadData();
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                CourseItemModel courseItem = snapshot.getValue(CourseItemModel.class);
+                if (courseItem != null) {
+                    courseItemRVArrayList.add(courseItem);
+                    adapter.notifyItemInserted(courseItemRVArrayList.size() - 1);
+                }
+                numberOfCourseRecords++;
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                CourseItemModel updatedItem = snapshot.getValue(CourseItemModel.class);
+                int indexToUpdate = -1;
+
+                for (int i = 0; i < courseItemRVArrayList.size(); i++) {
+                    if (courseItemRVArrayList.get(i).getCourseId() == updatedItem.getCourseId()) {
+                        indexToUpdate = i;
+                        break;
+                    }
+                }
+
+                if (indexToUpdate != -1) {
+                    courseItemRVArrayList.set(indexToUpdate, updatedItem);
+                    adapter.notifyItemChanged(indexToUpdate);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                CourseItemModel removedItem = snapshot.getValue(CourseItemModel.class);
+                int indexToUpdate = -1;
+
+                for (int i = 0; i < courseItemRVArrayList.size(); i++) {
+                    if (courseItemRVArrayList.get(i).getCourseId() == removedItem.getCourseId()) {
+                        indexToUpdate = i;
+                        courseItemRVArrayList.remove(indexToUpdate);
+                        adapter.notifyItemRemoved(indexToUpdate);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         buildRecyclerView();
 
         //Changing lowercase input from course name edit text to uppercase
@@ -77,9 +129,8 @@ public class Dh11airya extends Fragment {
             }
         });
 
-        //Add button logic
         addButton.setOnClickListener(vieww -> {
-            Pattern pattern = Pattern.compile(getString(R.string.regex_for_coursename));
+            Pattern pattern = Pattern.compile("^[A-Z]{4}-\\d{3,4}$");
             if (courseNameEditText.getText().toString().isEmpty()) {
                 courseNameEditText.setError(getString(R.string.empty_not_allowed));
             }
@@ -90,10 +141,9 @@ public class Dh11airya extends Fragment {
                 courseNameEditText.setError(getString(R.string.invalid_input));
             }
             else {
-                courseItemRVArrayList.add(new CourseItemModel(courseNameEditText.getText().toString(), courseDescriptionEditText.getText().toString()));
-                adapter.notifyItemInserted(courseItemRVArrayList.size());
-                myRef.setValue(courseItemRVArrayList); //Storing the data in Firebase
-                courseNameEditText.setText(R.string.empty_string);
+                String key = String.valueOf(numberOfCourseRecords); //Storing a new course record to 'coursesInDatabase' in Firebase
+                myRef.child(key).setValue(new CourseItemModel(numberOfCourseRecords, courseNameEditText.getText().toString(), courseDescriptionEditText.getText().toString()));
+                courseNameEditText.setText(getString(R.string.empty_string));
                 courseDescriptionEditText.setText(getString(R.string.empty_string));
             }
         });
@@ -102,16 +152,15 @@ public class Dh11airya extends Fragment {
             if (courseItemRVArrayList.isEmpty()) {
                 Toast.makeText(getContext(), getString(R.string.no_data_to_delete), Toast.LENGTH_SHORT).show();
             } else {
-                courseItemRVArrayList.clear();
-                buildRecyclerView();
                 myRef.removeValue();
             }
+            numberOfCourseRecords = 0;
         });
 
         return view;
     }
 
-    public void buildRecyclerView() {
+    private void buildRecyclerView() {
         adapter = new CourseAdapter(courseItemRVArrayList, getContext());
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         courseRV.setHasFixedSize(true);

@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DhairyaLab122"
 include ':DhairyaModule12'
+include ':FireBaseArtistDemo'
