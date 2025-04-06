@@ -14,10 +14,16 @@ import java.util.ArrayList;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder>{
     private ArrayList<CourseItemModel> courseItemModelArrayList;
     private Context context;
+    private OnItemLongClickListener onItemLongClickListener;
 
-    public CourseAdapter(ArrayList<CourseItemModel> courseItemRVArrayList, Context context) {
+    public interface OnItemLongClickListener {
+        void onItemLongClick(CourseItemModel courseItem, int position);
+    }
+
+    public CourseAdapter(ArrayList<CourseItemModel> courseItemRVArrayList, Context context, OnItemLongClickListener onItemLongClickListener) {
         this.courseItemModelArrayList = courseItemRVArrayList;
         this.context = context;
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     @NonNull
@@ -32,6 +38,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItemModel courseItemModel = courseItemModelArrayList.get(position);
         holder.courseNameTV.setText(courseItemModel.getCourseName());
         holder.courseDescriptionTV.setText(courseItemModel.getCourseDescription());
+        holder.itemView.setOnLongClickListener(view -> {
+            if (onItemLongClickListener != null) {
+                onItemLongClickListener.onItemLongClick(courseItemModel, position);
+            }
+            return true;
+        });
     }
 
     @Override

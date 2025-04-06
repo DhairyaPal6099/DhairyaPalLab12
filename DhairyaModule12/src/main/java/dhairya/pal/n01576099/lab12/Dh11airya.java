@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Dh11airya extends Fragment {
-    private int numberOfCourseRecords = 0;
+    private int uniqueRecordId;
     private RecyclerView courseRV;
     private CourseAdapter adapter;
     private ArrayList<CourseItemModel> courseItemRVArrayList;
@@ -45,6 +45,26 @@ public class Dh11airya extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(R.layout.fragment_dh11airya, container, false);
+
+        //Setting the unique record id to the maximum course id + 1
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int maxId = -1;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    CourseItemModel courseItem = dataSnapshot.getValue(CourseItemModel.class);
+                    if (courseItem != null && courseItem.getCourseId() > maxId) {
+                        maxId = courseItem.getCourseId();
+                    }
+                }
+                uniqueRecordId = maxId + 1;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         courseRV = view.findViewById(R.id.dhaRecyclerView);
         EditText courseNameEditText = view.findViewById(R.id.dhaCourseNameEditText);
@@ -62,7 +82,7 @@ public class Dh11airya extends Fragment {
                     courseItemRVArrayList.add(courseItem);
                     adapter.notifyItemInserted(courseItemRVArrayList.size() - 1);
                 }
-                numberOfCourseRecords++;
+                uniqueRecordId++;
             }
 
             @Override
@@ -141,8 +161,9 @@ public class Dh11airya extends Fragment {
                 courseNameEditText.setError(getString(R.string.invalid_input));
             }
             else {
-                String key = String.valueOf(numberOfCourseRecords); //Storing a new course record to 'coursesInDatabase' in Firebase
-                myRef.child(key).setValue(new CourseItemModel(numberOfCourseRecords, courseNameEditText.getText().toString(), courseDescriptionEditText.getText().toString()));
+                //Storing a new course record to 'coursesInDatabase' in Firebase
+                String key = String.valueOf(uniqueRecordId);
+                myRef.child(key).setValue(new CourseItemModel(uniqueRecordId, courseNameEditText.getText().toString(), courseDescriptionEditText.getText().toString()));
                 courseNameEditText.setText(getString(R.string.empty_string));
                 courseDescriptionEditText.setText(getString(R.string.empty_string));
             }
@@ -154,14 +175,19 @@ public class Dh11airya extends Fragment {
             } else {
                 myRef.removeValue();
             }
-            numberOfCourseRecords = 0;
+            uniqueRecordId = 0;
         });
 
         return view;
     }
 
     private void buildRecyclerView() {
-        adapter = new CourseAdapter(courseItemRVArrayList, getContext());
+        adapter = new CourseAdapter(courseItemRVArrayList, getContext(), new CourseAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(CourseItemModel courseItem, int position) {
+                //TODO: Show alert dialog box to update or delete the item
+            }
+        });
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(manager);
