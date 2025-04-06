@@ -20,6 +20,18 @@
     <string name="pal">Pal</string>
     <string name="n01576099">N01576099</string>
     <string name="dp">DP</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="website_urls">
+        <item>file:///android_asset/index.html</item>
+        <item>https://www.rollingstone.com/</item>
+        <item>https://www.linkedin.com/</item>
+        <item>https://www.cnn.com/</item>
+    </string-array>
+    <string-array name="websites">
+        <item>Select URL from list</item>
+        <item>Rolling Stone</item>
+        <item>LinkedIn</item>
+        <item>CNN</item>
+    </string-array>
+    <string name="embed_websites">Embed websites</string>
+    <string name="dhairya_pal">"Dhairya Pal "</string>
 </resources>

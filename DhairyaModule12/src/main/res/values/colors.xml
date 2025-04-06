@@ -6,4 +6,5 @@
     <color name="themeBlue">#4856B3</color>
     <color name="themeGray">#D6D6D6</color>
     <color name="lightGray">#E0E0E0</color>
+    <color name="faintCyan">#84DDEB</color>
 </resources>

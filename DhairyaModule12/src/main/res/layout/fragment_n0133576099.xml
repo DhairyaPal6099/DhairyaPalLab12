@@ -3,12 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/faintCyan"
     tools:context=".N0133576099">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        android:text="@string/embed_websites" />
+
+    <Spinner
+        android:id="@+id/dhaSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textAlignment="center"
+        android:layout_marginTop="110dp"
+        android:entries="@array/websites" />
+
+    <WebView
+        android:id="@+id/dhaWebview"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="160dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="120dp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/dhaAdView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="780dp"
+        app:adUnitId="ca-app-pub-3940256099942544/9214589741"
+        app:adSize="BANNER" />
 
 </FrameLayout>
