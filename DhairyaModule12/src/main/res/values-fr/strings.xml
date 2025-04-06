@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Dhairya Pal N01576099 -->
+
+<resources>
+    <string name="empty_not_allowed">Champ requis</string>
+    <string name="invalid_input">Entrée invalide</string>
+    <string name="no_data_to_delete">Aucune donnée à supprimer</string>
+</resources>

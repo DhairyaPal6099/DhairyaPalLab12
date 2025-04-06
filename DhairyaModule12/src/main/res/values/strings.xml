@@ -1,3 +1,5 @@
+<!-- Dhairya Pal N01576099 -->
+
 <resources>
     <string name="app_name">DhairyaLab122</string>
     <string name="all_characters_but_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&amp;'()*+,-./:;?@[\]^_`{|}~</string>
@@ -6,7 +8,6 @@
     <string name="invalid_input">Invalid input</string>
     <string name="empty_string" />
     <string name="no_data_to_delete">No data to delete</string>
-    <string name="regex_for_coursename">^[A-Z]{4}-\\d{3,4}$</string>
     <string name="coursesindatabase">coursesInDatabase</string>
     <string name="delete_this_record">Delete this record?</string>
     <string name="delete">DELETE</string>
