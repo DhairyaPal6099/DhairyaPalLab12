@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="215dp"
-        android:hint="Enter course name" />
+        android:hint="@string/enter_course_name" />
 
     <EditText
         android:id="@+id/dhaCourseDescriptionEditText"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
         android:digits="@string/all_characters_but_digits"
-        android:hint="Enter course description" />
+        android:hint="@string/enter_course_description" />
 
     <Button
         android:id="@+id/dhaAddButton"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:layout_marginStart="60dp"
-        android:text="Add" />
+        android:text="@string/add" />
 
     <Button
         android:id="@+id/dhaDeleteButton"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:layout_marginStart="260dp"
-        android:text="Delete" />
+        android:text="@string/delete_camelcase" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dhaRecyclerView"

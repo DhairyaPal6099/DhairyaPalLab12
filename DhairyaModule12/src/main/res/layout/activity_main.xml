@@ -11,6 +11,7 @@
         android:id="@+id/dhaToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/themeBlue"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
@@ -23,25 +24,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_icon_dhairya_home"
-            android:text="Dhairya" />
+            android:text="@string/dhairya" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_icon_pal_cart"
-            android:text="Pal" />
+            android:text="@string/pal" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_icon_n01576099_truck"
-            android:text="N01576099" />
+            android:text="@string/n01576099" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_icon_dp_sms"
-            android:text="DP" />
+            android:text="@string/dp" />
 
     </com.google.android.material.tabs.TabLayout>
 

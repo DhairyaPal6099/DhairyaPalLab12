@@ -12,8 +12,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.tabs.TabLayout;
+
+
+import java.util.ArrayList;
 
 public class PalActivity12 extends AppCompatActivity {
+
+    Fragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,29 @@ public class PalActivity12 extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.dhaToolbar);
         setSupportActionBar(toolbar);
 
+        ArrayList<Fragment> fragmentList = new ArrayList<>();
+        fragmentList.add(new Dh11airya());
+        fragmentList.add(new Pa22l());
+        fragmentList.add(new N0133576099());
+        fragmentList.add(new DP44());
 
+        TabLayout tabLayout = findViewById(R.id.dhaTabsLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedFragment = fragmentList.get(tab.getPosition());
+                getSupportFragmentManager().beginTransaction().replace(R.id.dhaFragmentContainerView, selectedFragment).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
