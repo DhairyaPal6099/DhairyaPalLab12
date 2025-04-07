@@ -7,4 +7,6 @@
     <color name="themeGray">#D6D6D6</color>
     <color name="lightGray">#E0E0E0</color>
     <color name="faintCyan">#84DDEB</color>
+    <color name="blue">#0000FF</color>
+    <color name="faintPink">#E0B2F8</color>
 </resources>

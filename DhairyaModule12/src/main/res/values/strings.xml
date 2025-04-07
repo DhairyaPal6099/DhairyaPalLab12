@@ -34,4 +34,10 @@
     </string-array>
     <string name="embed_websites">Embed websites</string>
     <string name="dhairya_pal">"Dhairya Pal "</string>
+    <string name="numbers">0123456789</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_message">Enter message</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="can_not_be_empty">Can not be empty</string>
+    <string name="must_be_ten_digits">Must be ten digits</string>
 </resources>
