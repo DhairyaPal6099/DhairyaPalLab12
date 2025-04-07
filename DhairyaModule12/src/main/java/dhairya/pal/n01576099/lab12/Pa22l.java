@@ -4,54 +4,121 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Pa22l extends Fragment {
+    private MapView mapView;
+    private GoogleMap gMap;
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private TextView textView;
 
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        }
-    };
+    private static final LatLng SYDNEY = new LatLng(-34, 151);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_pa22l, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
+
+        textView = view.findViewById(R.id.dhaTextView);
+        mapView = view.findViewById(R.id.dhaMapView);
+        if (mapView != null) {
+            mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync(googleMap -> {
+                gMap = googleMap;
+                gMap.getUiSettings().setZoomControlsEnabled(true);
+                gMap.addMarker(new MarkerOptions().position(SYDNEY).title(getString(R.string.sydneydhairya)));
+                Marker marker = gMap.addMarker(new MarkerOptions().position(SYDNEY).title(getString(R.string.sydneydhairya)));
+                marker.showInfoWindow();
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY));
+                gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(@NonNull LatLng latLng) {
+                        Geocoder geocoder = new Geocoder(getContext());
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                            if (addresses != null && !addresses.isEmpty()) {
+                                Address address = addresses.get(0);
+                                StringBuilder fullAddress = new StringBuilder();
+                                for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                                    fullAddress.append(address.getAddressLine(i)).append(getString(R.string.newline));
+                                }
+
+                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f));
+                                Marker marker = gMap.addMarker(new MarkerOptions().position(latLng).title(address.getLocality() + getString(R.string.dhairya)));
+                                marker.showInfoWindow();
+
+                                //Changing the textview
+                                textView.setText(fullAddress);
+
+                                //Creating a snackbar
+                                Snackbar snackbar = Snackbar.make(view, fullAddress, Snackbar.LENGTH_INDEFINITE);
+                                snackbar.setAction(getString(R.string.dismiss), view1 -> snackbar.dismiss());
+                                snackbar.show();
+                            }
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                });
+            });
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mapView != null) {
+            mapView.onSaveInstanceState(outState);
         }
     }
 }
