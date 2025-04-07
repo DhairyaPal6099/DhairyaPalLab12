@@ -43,4 +43,16 @@
     <string name="sydneydhairya">SydneyDhairya</string>
     <string name="newline">\n</string>
     <string name="dismiss">DISMISS</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="sms_delivered">SMS delivered</string>
+    <string name="sms_not_delivered">SMS not delivered</string>
+    <string name="sms_sent">SMS sent</string>
+    <string name="generic_failure">Generic failure</string>
+    <string name="no_service">No service</string>
+    <string name="null_pdu">Null PDU</string>
+    <string name="radio_off">Radio off</string>
+    <string name="sms_sent_underscore">SMS_SENT</string>
+    <string name="sms_delivered_underscore">SMS_DELIVERED</string>
+    <string name="course_name">Course name</string>
+    <string name="course_description">Course description</string>
 </resources>

@@ -1,3 +1,5 @@
+// Dhairya Pal N01576099
+
 package dhairya.pal.n01576099.lab12;
 
 import android.Manifest;
@@ -54,7 +56,7 @@ public class DP44 extends Fragment {
             if (o) {
                 sendSms(editTextNumber.getText().toString(), editTextMessage.getText().toString());
             } else {
-                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -64,10 +66,10 @@ public class DP44 extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.makeText(getContext(), "SMS delivered", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.sms_delivered), Toast.LENGTH_LONG).show();
                         break;
                     case Activity.RESULT_CANCELED:
-                        Toast.makeText(getContext(), "SMS not delivered", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.sms_not_delivered), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -78,19 +80,19 @@ public class DP44 extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.makeText(getContext(), "SMS sent", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.sms_sent), Toast.LENGTH_LONG).show();
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(getContext(), "Generic failure", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.generic_failure), Toast.LENGTH_LONG).show();
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(getContext(), "No service", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.no_service), Toast.LENGTH_LONG).show();
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(getContext(), "Null PDU", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.null_pdu), Toast.LENGTH_LONG).show();
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(getContext(), "Radio off", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.radio_off), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -117,11 +119,11 @@ public class DP44 extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void sendSms(String phoneNumber, String message) {
-        PendingIntent sentPI = PendingIntent.getBroadcast(getContext(), 0, new Intent("SMS_SENT"), PendingIntent.FLAG_IMMUTABLE);
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(getContext(), 0, new Intent("SMS_DELIVERED"), PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent sentPI = PendingIntent.getBroadcast(getContext(), 0, new Intent(getString(R.string.sms_sent_underscore)), PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(getContext(), 0, new Intent(getString(R.string.sms_delivered_underscore)), PendingIntent.FLAG_IMMUTABLE);
 
-        requireActivity().registerReceiver(sentReceiver, new IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED);
-        requireActivity().registerReceiver(deliveredReceiver, new IntentFilter("SMS_DELIVERED"), Context.RECEIVER_NOT_EXPORTED);
+        requireActivity().registerReceiver(sentReceiver, new IntentFilter(getString(R.string.sms_sent_underscore)), Context.RECEIVER_NOT_EXPORTED);
+        requireActivity().registerReceiver(deliveredReceiver, new IntentFilter(getString(R.string.sms_delivered_underscore)), Context.RECEIVER_NOT_EXPORTED);
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
