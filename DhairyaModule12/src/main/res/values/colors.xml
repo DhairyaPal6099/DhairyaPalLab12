@@ -10,4 +10,6 @@
     <color name="blue">#0000FF</color>
     <color name="faintPink">#E0B2F8</color>
     <color name="faintGreen">#C2F8C7</color>
+    <color name="darkGray">#A6A2A2</color>
+    <color name="faintYellow">#F6E59A</color>
 </resources>

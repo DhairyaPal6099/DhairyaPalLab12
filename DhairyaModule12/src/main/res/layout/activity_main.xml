@@ -12,12 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/themeBlue"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/dhaTabsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextColor="@color/tab_selector"
+        app:tabIndicatorColor="@color/red"
+        app:tabIconTint="@color/tab_selector"
+        app:tabIndicatorFullWidth="true"
+        app:tabBackground="@color/tab_selector_background"
         app:layout_constraintTop_toBottomOf="@id/dhaToolbar">
 
         <com.google.android.material.tabs.TabItem
